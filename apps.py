@@ -16,7 +16,7 @@ model = models.resnet50(weights=None)
 num_ftrs = model.fc.in_features
 model.fc = nn.Linear(num_ftrs, len(classes))
 
-model.load_state_dict(torch.load(r"C:\Users\dcken\Documents\DPA\model.pth", map_location=torch.device('cpu')))
+model.load_state_dict(torch.load(r"https://github.com/dckennedy301/DataScienceProject/blob/main/model.pth", map_location=torch.device('cpu')))
 
 model.eval()
 
