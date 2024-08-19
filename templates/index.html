@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tumor Type Prediction</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Helvetica, sans-serif;
+            background-color: #585858;
+            margin: 0;
+            color: white;
+        }
+        /* Navbar Styles */
+        #navbar {
+            background-color: #0edacf;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            border-bottom: solid 4px #585858;
+            z-index: 1000;
+        }
+        #navbar h1 {
+            float: left;
+            padding: 14px 30px;
+            font-size: 25px;
+            color: white;
+            margin: 0;
+        }
+        /* Welcome Section Styles */
+        #welcome-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px;
+            margin-top: 60px;
+        }
+        .welcome-text {
+            width: 100%;
+        }
+        /* Form Styles */
+        #upload-form {
+            margin-top: 30px;
+        }
+        input[type="file"] {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        input[type="submit"] {
+            background-color: #0edacf;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #585858;
+        }
+        /* Result Section Styles */
+        #result-section {
+            margin-top: 30px;
+            font-size: 22px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav id="navbar">
+        <h1>Tumor Type Prediction</h1>
+    </nav>
+
+    <!-- Welcome Section -->
+    <section id="welcome-section">
+        <div class="welcome-text">
+            <h1>Upload an Image for Tumor Type Prediction</h1>
+            <p>Please upload an image, and the model will predict the type of tumor present.</p>
+        </div>
+
+        <!-- Upload Form -->
+        <form id="upload-form" action="/" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <br>
+            <input type="submit" value="Predict Tumor Type">
+        </form>
+
+        <!-- Result Section -->
+        {% if prediction %}
+        <div id="result-section">
+            <h2>Prediction Result:</h2>
+            <p>{{ prediction }}</p>
+        </div>
+        {% endif %}
+    </section>
+</body>
+</html>
