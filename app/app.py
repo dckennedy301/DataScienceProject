@@ -17,7 +17,7 @@ num_ftrs = model.fc.in_features
 model.fc = nn.Linear(num_ftrs, len(classes))
 
 # Update model path to point to the model file in the same repository
-model_path = os.path.join(os.path.dirname(__file__), 'app', 'model.pth')
+model_path = os.path.join(os.path.dirname(__file__), 'model.pth')
 model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
 
 model.eval()
