@@ -9,22 +9,34 @@ from torchvision import models
 
 app = Flask(__name__)
 
+# Define the classes for prediction
 classes = ['glioma', 'meningioma', 'notumor', 'pituitary']
 
+# Initialize the ResNet50 model with no pretrained weights
 model = models.resnet50(weights=None)
 
+# Modify the final layer to match the number of classes
 num_ftrs = model.fc.in_features
 model.fc = nn.Linear(num_ftrs, len(classes))
 
-# Update model path to point to the model file in the same repository
+# Correctly set the path to the model file, ensuring it works in different environments
 model_path = os.path.join(os.path.dirname(__file__), 'model.pth')
-model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
 
+# Load the model's state dict
+try:
+    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
+except Exception as e:
+    print(f"Error loading model: {e}")
+    raise
+
+# Set the model to evaluation mode
 model.eval()
 
+# Define the device to run the model on
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = model.to(device)
 
+# Define the image transformation pipeline
 transform = transforms.Compose([
     transforms.Resize((256, 256)),
     transforms.ToTensor(),
@@ -49,17 +61,22 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg'}
 
 def predict_tumor_type(image_path):
-    image = Image.open(image_path)
-    
-    image = image.convert('RGB')
-    
+    # Load and preprocess the image
+    image = Image.open(image_path).convert('RGB')
     image = transform(image).unsqueeze(0)
-    
     image = image.to(device)
     
+    # Make prediction with the model
     with torch.no_grad():
         output = model(image)
         _, predicted = torch.max(output, 1)
     
     return classes[predicted.item()]
 
+if __name__ == '__main__':
+    # Create the uploads directory if it doesn't exist
+    if not os.path.exists('uploads'):
+        os.makedirs('uploads')
+    
+    # Run the Flask app
+    app.run(debug=True)
