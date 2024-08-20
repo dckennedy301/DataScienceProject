@@ -6,6 +6,8 @@ import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
 from torchvision import models
+import requests
+import io
 
 app = Flask(__name__)
 
@@ -16,7 +18,9 @@ model = models.resnet50(weights=None)
 num_ftrs = model.fc.in_features
 model.fc = nn.Linear(num_ftrs, len(classes))
 
-model.load_state_dict(torch.load(r"C:\Users\dcken\Documents\DPA\model.pth", map_location=torch.device('cpu')))
+model_url = "https://github.com/dckennedy301/DS-project/raw/main/model.pth"
+response = requests.get(model_url)
+model.load_state_dict(torch.load(io.BytesIO(response.content), map_location=torch.device('cpu')))
 
 model.eval()
 
