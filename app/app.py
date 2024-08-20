@@ -6,8 +6,6 @@ import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
 from torchvision import models
-import requests
-import io
 
 app = Flask(__name__)
 
@@ -18,9 +16,9 @@ model = models.resnet50(weights=None)
 num_ftrs = model.fc.in_features
 model.fc = nn.Linear(num_ftrs, len(classes))
 
-model_url = "https://drive.google.com/uc?export=download&id=1BZ0-F_Gphl14UNWs1yuXmRq--h4W6-g3"
-response = requests.get(model_url)
-model.load_state_dict(torch.load(io.BytesIO(response.content), map_location=torch.device('cpu')))
+# Update model path to point to the model file in the same repository
+model_path = os.path.join(os.path.dirname(__file__), 'app', 'model.pth')
+model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
 
 model.eval()
 
@@ -65,5 +63,3 @@ def predict_tumor_type(image_path):
     
     return classes[predicted.item()]
 
-if __name__ == '__main__':
-    app.run(debug=True)
