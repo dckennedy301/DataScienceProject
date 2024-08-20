@@ -42,8 +42,24 @@
             font-size: 28px;
             margin-bottom: 20px;
         }
-        #result-section p {
+        /* Prediction Box Styles */
+        .prediction-box {
+            background-color: #404040;
+            padding: 20px;
+            border: 2px solid #0edacf;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: left;
+            max-width: 600px;
+            width: 100%;
+        }
+        .prediction-box h3 {
+            color: #0edacf;
+            margin-top: 0;
+        }
+        .prediction-box p {
             font-size: 22px;
+            margin: 10px 0;
         }
         /* Button Styles */
         .button {
@@ -71,7 +87,15 @@
     <!-- Result Section -->
     <section id="result-section">
         <h2>Prediction Result:</h2>
-        <p>{{ prediction }}</p>
+
+        <!-- Prediction Box -->
+        <div class="prediction-box">
+            <h3>Model's Prediction for the Uploaded Image:</h3>
+            <p>{{ prediction }}</p>
+            <h3>Disclaimer:</h3>
+            <p>This brain tumor detection model is specifically trained to identify and classify four types of brain tumors: Glioma, Meningioma, No Tumor, and Pituitary Tumor. If an image containing a different type of tumor or any other medical condition is uploaded, the model may not provide an accurate result. This model is intended as a supplementary tool and should not be used as a standalone diagnostic method. For accurate and comprehensive medical advice, it is essential to consult with a qualified healthcare professional.</p>
+        </div>
+
         <a href="/" class="button">Upload Another Image</a>
     </section>
 </body>
