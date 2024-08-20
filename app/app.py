@@ -18,7 +18,7 @@ model = models.resnet50(weights=None)
 num_ftrs = model.fc.in_features
 model.fc = nn.Linear(num_ftrs, len(classes))
 
-model_url = "https://github.com/dckennedy301/DS-project/raw/main/model.pth"
+model_url = "https://drive.google.com/uc?export=download&id=1BZ0-F_Gphl14UNWs1yuXmRq--h4W6-g3"
 response = requests.get(model_url)
 model.load_state_dict(torch.load(io.BytesIO(response.content), map_location=torch.device('cpu')))
 
