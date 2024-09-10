@@ -1,94 +1,154 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tumor Type Prediction</title>
-    <style>
-        /* General Styles */
-        body {
-            font-family: Helvetica, sans-serif;
-            background-color: #585858;
-            margin: 0;
-            color: white;
-        }
-        /* Navbar Styles */
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #000000;
+        margin: 0;
+        color: #ffffff;
+        line-height: 1.6;
+    }
+
+    /* Navbar Styles */
+    #navbar {
+        background-color: #0edacf;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        z-index: 1000;
+    }
+
+    #navbar h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 600;
+        color: #000000;
+    }
+
+    /* Welcome Section Styles */
+    #welcome-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 120px 10%;
+        text-align: center;
+        background-color: #111111;
+    }
+
+    .welcome-text h1 {
+        font-size: 32px;
+        color: #0edacf;
+        margin-bottom: 40px;
+        font-weight: 700;
+    }
+
+    .model-description {
+        background-color: #1c1c1c;
+        padding: 25px;
+        border-radius: 12px;
+        border: 2px solid #0edacf;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+        margin-top: 30px;
+        text-align: left;
+        max-width: 800px;
+        width: 100%;
+    }
+
+    .model-description h2,
+    .model-description h3 {
+        color: #0edacf;
+    }
+
+    .model-description p {
+        margin: 12px 0;
+        color: #cccccc;
+    }
+
+    .model-description p strong {
+        color: #0edacf;
+    }
+
+    /* Form Styles */
+    #upload-form {
+        margin-top: 40px;
+        padding: 20px;
+        background-color: #1c1c1c;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+        text-align: center;
+    }
+
+    input[type="file"] {
+        padding: 12px;
+        font-size: 16px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        border: 1px solid #0edacf;
+        background-color: #111111;
+        color: #ffffff;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    input[type="submit"] {
+        background-color: #0edacf;
+        color: black;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 6px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #0cb2b1;
+    }
+
+    /* Result Section Styles */
+    #result-section {
+        margin-top: 40px;
+        padding: 20px;
+        background-color: #1c1c1c;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+        text-align: center;
+        color: #ffffff;
+        max-width: 800px;
+        width: 100%;
+    }
+
+    /* Media Queries */
+    @media screen and (max-width: 768px) {
         #navbar {
-            background-color: #0edacf;
-            width: 100%;
-            position: fixed;
-            top: 0;
-            border-bottom: solid 4px #585858;
-            z-index: 1000;
-        }
-        #navbar h1 {
-            float: left;
-            padding: 14px 30px;
-            font-size: 25px;
-            color: white;
-            margin: 0;
-        }
-        /* Welcome Section Styles */
-        #welcome-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 100px 20px;
-            margin-top: 60px;
-        }
-        .welcome-text {
-            width: 100%;
-        }
-        /* Model Description Box */
-        .model-description {
-            background-color: #404040;
-            padding: 20px;
-            border: 2px solid #0edacf;
-            border-radius: 10px;
-            margin-top: 20px;
-            text-align: left;
-        }
-        .model-description h2,
-        .model-description h3 {
-            color: #0edacf;
-        }
-        .model-description p {
-            margin: 10px 0;
-        }
-        /* Form Styles */
-        #upload-form {
-            margin-top: 30px;
-        }
-        input[type="file"] {
-            padding: 10px;
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
-        input[type="submit"] {
-            background-color: #0edacf;
-            color: white;
             padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            transition: background-color 0.3s ease;
         }
-        input[type="submit"]:hover {
-            background-color: #585858;
+
+        #navbar h1 {
+            font-size: 20px;
         }
-        /* Result Section Styles */
-        #result-section {
-            margin-top: 30px;
-            font-size: 22px;
+
+        #welcome-section {
+            padding: 100px 5%;
         }
-    </style>
+
+        .model-description {
+            padding: 20px;
+        }
+    }
+</style>
+
 </head>
 <body>
     <!-- Navbar -->
     <nav id="navbar">
-        <h1>Tumor Type Prediction</h1>
+        <h1>Dylan's Portfolio - Tumor Type Prediction</h1>
     </nav>
 
     <!-- Welcome Section -->
@@ -99,30 +159,30 @@
             <!-- Model Description Box -->
             <div class="model-description">
                 <h2>Detailed Description of the Brain Tumor Detection Model</h2>
-                <p>This model is designed to automatically classify brain MRI images into one of four categories: Glioma, Meningioma, No Tumor, and Pituitary Tumor. It is built using the PyTorch deep learning framework and leverages the pre-trained ResNet-50 architecture, which is known for its robust feature extraction capabilities, especially in image classification tasks.</p>
+                <p>This model is designed to automatically classify brain MRI images into one of four categories: Glioma, Meningioma, No Tumor, and Pituitary Tumor. It is built using the PyTorch deep learning framework and leverages the pre-trained ResNet-50 architecture, known for its robust feature extraction capabilities, especially in image classification tasks.</p>
 
                 <h3>1. Data Preparation and Preprocessing:</h3>
                 <p><strong>Dataset Composition:</strong> The model uses two datasets: a training set and a validation set, each containing MRI images categorized into the four classes mentioned above. The datasets are organized using PyTorch’s ImageFolder utility, which expects images to be stored in directories corresponding to their class labels.</p>
-                <p><strong>Image Transformation:</strong> Each image is resized to 256x256 pixels to ensure uniformity across the dataset. This step is crucial because it allows the model to process all images at the same scale, which is important for maintaining consistency during training. After resizing, the images are converted into tensors—a necessary step for feeding them into the neural network.</p>
+                <p><strong>Image Transformation:</strong> Each image is resized to 256x256 pixels to ensure uniformity across the dataset. This step is crucial because it allows the model to process all images at the same scale, important for maintaining consistency during training. After resizing, the images are converted into tensors—a necessary step for feeding them into the neural network.</p>
 
                 <h3>2. Model Architecture:</h3>
-                <p><strong>Base Model – ResNet-50:</strong> The model is based on ResNet-50, a deep convolutional neural network that is pre-trained on the ImageNet dataset, a large dataset containing millions of images across thousands of categories. The ResNet-50 architecture is renowned for its depth and the use of residual blocks, which help mitigate the vanishing gradient problem in deep networks.</p>
-                <p><strong>Customization for Tumor Classification:</strong> While ResNet-50 comes pre-trained, it is tailored to this specific task by replacing its final fully connected layer. The original output layer of ResNet-50, designed to classify 1,000 classes, is replaced with a new fully connected layer that outputs predictions for the four tumor classes. This new layer is configured with four output neurons, each corresponding to one of the tumor categories.</p>
+                <p><strong>Base Model – ResNet-50:</strong> The model is based on ResNet-50, a deep convolutional neural network pre-trained on the ImageNet dataset, which contains millions of images across thousands of categories. ResNet-50's architecture is known for its depth and the use of residual blocks, which help mitigate the vanishing gradient problem in deep networks.</p>
+                <p><strong>Customization for Tumor Classification:</strong> The ResNet-50’s final fully connected layer, initially designed to classify 1,000 classes, is replaced with a layer that outputs predictions for the four tumor classes. The new layer contains four output neurons, each corresponding to one tumor category.</p>
 
                 <h3>3. Training Process:</h3>
-                <p><strong>Loss Function:</strong> The model uses the Cross Entropy Loss function, which is standard for multi-class classification problems. This loss function compares the predicted class probabilities with the actual labels and computes the loss, which the model aims to minimize during training.</p>
-                <p><strong>Optimizer:</strong> The Adam Optimizer is employed to update the model’s weights during training. Adam is favored for its efficiency and ability to adapt learning rates during the optimization process, which often leads to faster convergence.</p>
-                <p><strong>Training on GPU:</strong> If available, the training process leverages a GPU, significantly speeding up the computations, especially when processing large amounts of image data. The model is trained over several epochs, where each epoch represents one complete pass through the training dataset.</p>
+                <p><strong>Loss Function:</strong> Cross Entropy Loss is used for multi-class classification, comparing the predicted class probabilities with the actual labels. The model minimizes this loss during training.</p>
+                <p><strong>Optimizer:</strong> Adam Optimizer is used for updating the model’s weights during training. Adam adapts learning rates during optimization, leading to faster convergence.</p>
+                <p><strong>Training on GPU:</strong> When available, the training leverages a GPU for faster computation, especially when processing large amounts of image data. The model is trained over several epochs.</p>
 
                 <h3>4. Model Evaluation:</h3>
-                <p><strong>Validation Set:</strong> After each training epoch, the model is evaluated on a separate validation dataset to monitor its performance. This helps in understanding how well the model generalizes to unseen data.</p>
-                <p><strong>Confusion Matrix:</strong> To provide a clear view of the model’s performance, a confusion matrix is generated. This matrix shows the number of correct and incorrect predictions for each class, highlighting where the model is performing well and where it might need improvement.</p>
+                <p><strong>Validation Set:</strong> The model is evaluated on a validation dataset after each epoch to monitor its performance and how well it generalizes to unseen data.</p>
+                <p><strong>Confusion Matrix:</strong> A confusion matrix is generated to highlight correct and incorrect predictions for each class, offering insight into where the model excels or needs improvement.</p>
 
                 <h3>5. Model Deployment:</h3>
-                <p>Once the model is trained and evaluated, it can be deployed to a web application where users can upload MRI images for classification. The model will output the predicted class, providing users with an indication of the type of tumor present.</p>
+                <p>Once the model is trained and evaluated, it can be deployed to a web application where users can upload MRI images for classification. The model outputs the predicted class, helping users identify the type of tumor present.</p>
 
                 <h3>Disclaimer:</h3>
-                <p>This brain tumor detection model is specifically trained to identify and classify four types of brain tumors: Glioma, Meningioma, No Tumor, and Pituitary Tumor. If an image containing a different type of tumor or any other medical condition is uploaded, the model may not provide an accurate result. This model is intended as a supplementary tool and should not be used as a standalone diagnostic method. For accurate and comprehensive medical advice, it is essential to consult with a qualified healthcare professional.</p>
+                <p>This brain tumor detection model is trained to classify four types of brain tumors: Glioma, Meningioma, No Tumor, and Pituitary Tumor. It may not provide accurate results for other types of tumors or medical conditions. This model is intended as a supplementary tool and should not replace medical consultation.</p>
             </div>
         </div>
 
@@ -144,4 +204,3 @@
         {% endif %}
     </section>
 </body>
-</html>
