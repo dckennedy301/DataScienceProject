@@ -51,9 +51,9 @@ def upload_file():
             file_path = os.path.join('uploads', filename)
             file.save(file_path)
             
-            prediction = predict_tumor_type(file_path)
+            prediction, confidence = predict_tumor_type(file_path)
             
-            return render_template('result.html', prediction=prediction)
+            return render_template('result.html', prediction=prediction, confidence=confidence)
     
     return render_template('index.html')
 
@@ -69,9 +69,13 @@ def predict_tumor_type(image_path):
     # Make prediction with the model
     with torch.no_grad():
         output = model(image)
-        _, predicted = torch.max(output, 1)
+        probabilities = torch.nn.functional.softmax(output, dim=1)
+        confidence, predicted = torch.max(probabilities, 1)
     
-    return classes[predicted.item()]
+    # Capitalize the tumor type for display
+    predicted_class = classes[predicted.item()].capitalize()
+    
+    return predicted_class, confidence.item() * 100
 
 if __name__ == '__main__':
     # Create the uploads directory if it doesn't exist

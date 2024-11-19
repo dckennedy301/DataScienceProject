@@ -15,37 +15,37 @@
             overflow: hidden;
         }
 
-          /* Navbar Styles */
-    #navbar {
-        background-color: #0edacf;
-        width: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 30px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-        z-index: 1000;
-    }
+        /* Navbar Styles */
+        #navbar {
+            background-color: #0edacf;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+        }
 
-    #navbar h1 {
-        margin: 0;
-        font-size: 24px;
-        font-weight: 600;
-        color: #000000;
-    }
+        #navbar h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+            color: #000000;
+        }
 
         /* Result Section Styles */
         #result-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content:flex-start;
+            justify-content: flex-start;
             padding: 100px 15%;
             text-align: center;
-            background-color: #111111 ;
+            background-color: #111111;
             min-height: 79vh;
         }
 
@@ -135,7 +135,8 @@
         <!-- Prediction Box -->
         <div class="prediction-box">
             <h3>Model's Prediction for the Uploaded Image:</h3>
-            <p>{{ prediction }}</p>
+            <p><strong>Tumor Type:</strong> {{ prediction }}</p>
+            <p><strong>Confidence Score:</strong> {{ confidence | round(2) }}%</p>
             <h3>Disclaimer:</h3>
             <p>This brain tumor detection model is specifically trained to identify and classify four types of brain tumors: Glioma, Meningioma, No Tumor, and Pituitary Tumor. If an image containing a different type of tumor or any other medical condition is uploaded, the model may not provide an accurate result. This model is intended as a supplementary tool and should not be used as a standalone diagnostic method. For accurate and comprehensive medical advice, it is essential to consult with a qualified healthcare professional.</p>
         </div>
